@@ -8,10 +8,11 @@ class ProductPage(BasePage):
     def should_be_correctly_added_good_to_cart(self):
         self.should_be_added_to_cart()
         self.solve_quiz_and_get_code()
-        self.should_be_message_basket_total()
         self.should_be_message_about_adding()
+        self.should_be_message_basket_total()
 
     def should_be_added_to_cart(self):
+        assert self.is_element_present(*ProductPageLocators.ADD_TO_CART_BUTTON)
         add_btn = self.browser.find_element(*ProductPageLocators.ADD_TO_CART_BUTTON)
         add_btn.click()
 
@@ -36,15 +37,13 @@ class ProductPage(BasePage):
             "Message about adding is not presented")
         product_name = self.browser.find_element(*ProductPageLocators.PRODUCT_NAME).text
         message = self.browser.find_element(*ProductPageLocators.MESSAGE_ABOUT_ADDING).text
-        assert product_name in message, "No product name in the message"
+        assert product_name == message, "No product name in the message"
 
     def should_be_message_basket_total(self):
         assert self.is_element_present(*ProductPageLocators.MESSAGE_BASKET_TOTAL), (
             "Message basket total is not presented")
         assert self.is_element_present(*ProductPageLocators.PRODUCT_PRICE), (
             "Product price is not presented")
-        # Затем получаем текст элементов для проверки
         message_basket_total = self.browser.find_element(*ProductPageLocators.MESSAGE_BASKET_TOTAL).text
         product_price = self.browser.find_element(*ProductPageLocators.PRODUCT_PRICE).text
-        # Проверяем, что цена товара присутствует в сообщении со стоимостью корзины
-        assert product_price in message_basket_total, "No product price in the message"
+        assert product_price == message_basket_total, "No product price in the message"
