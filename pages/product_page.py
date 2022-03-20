@@ -5,12 +5,6 @@ import math
 
 
 class ProductPage(BasePage):
-    def should_be_correctly_added_good_to_cart(self):
-        self.should_be_added_to_cart()
-        self.solve_quiz_and_get_code()
-        self.should_be_message_about_adding()
-        self.should_be_message_basket_total()
-
     def should_be_added_to_cart(self):
         assert self.is_element_present(*ProductPageLocators.ADD_TO_CART_BUTTON)
         add_btn = self.browser.find_element(*ProductPageLocators.ADD_TO_CART_BUTTON)
@@ -47,3 +41,5 @@ class ProductPage(BasePage):
         message_basket_total = self.browser.find_element(*ProductPageLocators.MESSAGE_BASKET_TOTAL).text
         product_price = self.browser.find_element(*ProductPageLocators.PRODUCT_PRICE).text
         assert product_price == message_basket_total, "No product price in the message"
+
+
